@@ -82,13 +82,44 @@ from books as b, orders as o, customers as c
 where c.customername = "Jan" and c.customersurname="nowak" 
 and c.idcustomer = o.idcustomer and o.idbook = b.idbook;*/
 
-select c.customername, c.customersurname, o.idorder, o.orderdate, o.status, b.title
+/*select c.customername, c.customersurname, o.idorder, o.orderdate, o.status, b.title
 from customers as c, orders as o, books as b
 where c.customersurname="rutkowski" and c.idcustomer = o.idorder and o.idbook = b.idbook 
-order by o.orderdate asc ;
- 
+order by o.orderdate asc ;*/
 
+#use bookstore;
+#update customers set customersurname="Psikuta" where idcustomer=4;
+#select * from customers where idcustomer=4;
 
+#update customers set idcustomer=1 where idcustomer=3;
+
+#UPDATE books SET price=round (price*1.1,2);
+
+#select * from books;
+
+#update books set price = price-10 order by price desc;
+#select * from books;
+
+#update customers set customername="Joanna", customersurname="Dostojewska" where idcustomer=10;
+
+#select * from customers;
+
+#update orders set status="wysłano" where idorder=4 or idorder=5;
+#select * from orders;
+
+insert into customers (customername, customersurname, city) values
+("Franciszek", "Janowski", "Chorzów");
+select * from customers;
+select * from books;
+
+insert into orders (idcustomer, idbook, orderdate, status) values
+(7, 3, "2017-09-12", "oczekiwanie");
+select * from orders;
+
+insert into books (authorName, authorSurname, title) values
+("", "Grębosz", "Symfonia C++"); 
+
+select * from books;
 
 
 
