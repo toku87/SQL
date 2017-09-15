@@ -2654,6 +2654,15 @@ select first_name, last_name, salary from employees where salary < (select salar
 select e.first_name, e.last_name, e.salary from employees as e join employees as ee on e.salary<ee.salary where ee.employee_id=182;
 #8
 select e.first_name as `Pracownik name`, m.first_name as `Szef name` from employees e left join employees m on e.manager_id=m.employee_id; 
+#9
+select d.department_name, l.city, l.state_province from departments as d join locations as l on l.location_id=d.location_id;
+#10
+select e.first_name, e.last_name, d.department_id, d.department_name from employees as e left join departments as d on e.department_id=d.department_id;
+#11 zle
+select concat(e.first_name," ", e.last_name) as `Imię i nazwisko`, ee.first_name as `Imię kierownika` from employees as e left join employees as ee using (manager_id);
+#12
+select e.first_name, e.last_name, d.department_id from employees as e join departments d using (department_id) where department_id in 
+(select department_id from employees where last_name="taylor");
 
 #13
 select j.job_title, d.department_name, e.first_name, e.last_name, jh.start_date from job_history jh join jobs j using (job_id)
@@ -2661,8 +2670,27 @@ join departments d using (department_id) join employees e using (employee_id) wh
 
 #14
 select c.country_name, l.city, d.department_name as wydziały from countries as c join locations as l on c.country_id=l.country_id join departments as d on l.location_id = d.location_id; 
+
 #15
 select department_name, first_name, last_name from departments d join employees e on (d.manager_id=e.employee_id);
+
 #16
 select country_name, city, count(department_id) as `ilosc departamentow` from countries join locations using (country_id) join departments using (location_id) where department_id 
 in (select department_id from employees group by department_id having count(department_id)>=2) group by country_name, city;  
+
+#17
+select d.department_name, e.first_name, e.last_name, l.city from departments as d join employees as e using (department_id) join locations as l using (location_id) group by department_name, city;
+select * from locations;
+
+#18
+select e.first_name, e.last_name, e.email, e.phone_number, e.salary from employees as e join departments using (department_id) join locations using (location_id) where city="london";
+
+#19
+select e.employee_id, e.first_name, e.last_name, e.email, e.phone_number, c.country_name from employees as e join departments using (department_id) join locations using (location_id) 
+join countries c using (country_id);
+
+
+
+
+
+

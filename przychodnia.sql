@@ -34,7 +34,8 @@ CREATE TABLE Visits (
 `IDvisit` int NOT NULL AUTO_INCREMENT,
 `IDdoctor` int NOT NULL,
 `IDpatient` int NOT NULL,
-`visitDate` datetime NOT NULL,
+`visitDate` date NOT NULL,
+`visithour` time not null,
 PRIMARY KEY (`IDvisit`))
 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1;
 
@@ -53,6 +54,7 @@ CREATE TABLE Activities (
 PRIMARY KEY (`IDactivity`))
 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1;
 
+
 #INSERT
 
 INSERT INTO Patients (patientName, patientSurname, dateofbirth, city, address, gender) values 
@@ -66,9 +68,14 @@ INSERT INTO Doctors (doctorName, doctorSurname) values
 ("Lech", "Kaczyński");
 
 INSERT INTO Workhours (IDdoctor, workstart, workend) values 
-("Jerzy", "Karzeł"),
-("Krystyna", "Danielczuk"),
-("Lech", "Kaczyński");
+(1, 06, 14),
+(2, 10, 18),
+(3, 14, 22),
+(4, 22, 06);
+
+
+
+# TRIGGERS
 
 delimiter |
 Create Trigger addPatient
@@ -76,11 +83,16 @@ after insert on patients
 for each row
 begin 
 insert  into activities 
-set message= (select(concat("Pacjent :", new.patientname," ", new.patientsurname, "dodał sie do bazy pacjentów")));
-insert into visits(iddoctor, idpatient, visitdate) values (1, null, 
+set activityDescription= (select(concat("Pacjent : ", new.patientname," ", new.patientsurname, " dodał sie do bazy pacjentów"))), timeofactivity=now();
+insert into visits(iddoctor, idpatient, visitdate, visithour) values (1, (select idpatient from patients order by idpatient desc limit 1), curdate(),curtime());
 END
-
-
+|
+drop trigger addpatient;
+|
+select * from visits;
+|
+INSERT INTO Patients (patientName, patientSurname, dateofbirth, city, address, gender) values 
+("Jola", "Nowak", "1933-09-25", "Wrocław", "Na Sianie 2/12", "M");
 
 
 

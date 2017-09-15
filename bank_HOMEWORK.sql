@@ -104,11 +104,43 @@ VALUES
 (520,'Kaja','Naturalna',40,70,140,'1988-09-02',3100.00,150.00),
 (530,'Julian','Zdziwiony',50,70,150,'1987-03-19',3200.00,200.00);
 
-#select * from pracownicy;
-#select * from stanowiska;
-#select * from dzialy;
+#1
+select * from pracownicy;
+#2
+select * from stanowiska;
+#3
+select * from dzialy;
+#4
+select imie, nazwisko, pensja from pracownicy;
+#5 i 6
+select imie, nazwisko, (pensja+dodatki) as `całkowite wynagrodzenie` from pracownicy;
+#7
+select imie, nazwisko, round((pensja+dodatki)/30,2) as `Dniówka`, round((pensja+dodatki)/4,2) as `Tygodniówka`, 
+(pensja+dodatki) as `Pensja miesięczna`, (pensja+dodatki)*12 as `Pensja roczna` from pracownicy;
+#8
+select imie, nazwisko from pracownicy where nazwisko like "M%";
+#9
+select imie, nazwisko from pracownicy as p, dzialy as d where d.nazwa="logistyka" or d.nazwa="informatyka" and d.id_dzialu=p.id_dzialu;
+#10 nie zrobione
+select p.imie + " " + p.nazwisko as `Imię i nazwisko` , p.imie + " " + p.nazwisko as `Imię i nazwisko przełożonego` from pracownicy as p
+where id_przelozonego=(select nazwisko from pracownicy where nazwisko="banko" );
+#11
+# nie ma w żadnej tabeli informacji o zakończeniu pracy
 
-#select imie, nazwisko, pensja from pracownicy;
-#select imie, nazwisko, (pensja+dodatki) as `całkowite wynagrodzenie` from pracownicy;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
